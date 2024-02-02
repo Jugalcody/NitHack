@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!-- margin for register page-->
+    <dimen name="margin_small">5dp</dimen>
+    <dimen name="padding_register">11dp</dimen>
+    <dimen name="register_header_text_size">22sp</dimen>
+    <dimen name="register_font_size">15sp</dimen>
+    <dimen name="register_edit_text_size">15sp</dimen>
+    <dimen name="height">30dp</dimen>
+    <dimen name="otp_padding">9dp</dimen>
+    <style name="CustomTabLayout" parent="Widget.Design.TabLayout">
+
+
+        <item name="tabPaddingStart">0dp</item>
+        <item name="tabPaddingEnd">1dp</item>
+        <item name="tabPaddingTop">1dp</item>
+        <item name="tabPaddingBottom">0dp</item>
+    </style>
+
+    <style name="CustomTabText" parent="Widget.Design.TabLayout">
+        <item name="android:textSize">100sp</item>
+    </style>
+
+<style name="text_active">
+
+    <item name="android:textSize">15sp</item>
+    <item name="itemIconTint">@color/white</item>
+</style>
+    <style name="text_inactive">
+        <item name="android:textSize">14sp</item>
+        <item name="itemIconTint">#938E8E</item>
+    </style>
+
+
+</resources>
