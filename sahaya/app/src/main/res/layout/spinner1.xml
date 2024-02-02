@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/spinnerItem"
         android:background="@drawable/spinnerstyle"
-        android:textColor="@color/black"
+        android:textColor="#3F4040"
         android:textSize="15sp"
 
 

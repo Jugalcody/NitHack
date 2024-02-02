@@ -6,4 +6,7 @@
     </style>
 
     <style name="Theme.Sahaya" parent="Base.Theme.Sahaya" />
+    <style name="ThemeOverlay.AppCompat.navTheme">
+        <item name="colorPrimary">@color/white</item>
+    </style>
 </resources>

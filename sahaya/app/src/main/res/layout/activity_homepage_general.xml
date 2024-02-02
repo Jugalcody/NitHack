@@ -4,19 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/white"
+    android:id="@+id/drawerLayout_general"
     android:layout_height="match_parent"
     tools:context=".HomePage_General">
-
-    <include layout="@layout/app_bar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        >
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_general"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#B54848"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-        <com.google.android.material.navigation.NavigationView
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:id="@+id/navigationView"
-            app:headerLayout="@layout/header_layout"
-            app:menu="@menu/navigation_item"/>
+            android:id="@+id/container"/>
+
+    </RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/navigationview_drawer"
+        android:layout_gravity="start"
+        android:background="#3C3737"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        android:theme="@style/ThemeOverlay.AppCompat.navTheme"
+        app:headerLayout="@layout/header_layout"
+        app:menu="@menu/navigation_item"/>
+
 
     </androidx.drawerlayout.widget.DrawerLayout>
