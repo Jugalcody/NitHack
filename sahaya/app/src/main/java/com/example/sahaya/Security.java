@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,23 +33,22 @@ public class Security extends AppCompatActivity {
                 R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        openFragment(new Guard_Home_Fragment());
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
                 if (itemId == R.id.nav_profile) {
-
+                    openFragment(new Guard_Profile_Fragment());
                     Toast.makeText(getApplicationContext(), "profile", Toast.LENGTH_SHORT).show();
                 }
                 else if (itemId==R.id.nav_home) {
-
+                    openFragment(new Guard_Home_Fragment());
                 }
                 else if(itemId==R.id.nav_QRcode){
-
+                      openFragment(new Guard_QR_Fragment());
                 }else if(itemId==R.id.nav_setting) {
-
-
-
+                    openFragment(new Guard_Setting_fragment());
                 }
                 else if (itemId==R.id.nav_logout) {
                     Intent i=new Intent(getApplicationContext(), LoginActivity.class);
@@ -70,5 +71,9 @@ public class Security extends AppCompatActivity {
 
         }
     }
-
+    private void openFragment(Fragment fragment){
+        FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container_security,fragment);
+        transaction.commit();
+    }
 }
