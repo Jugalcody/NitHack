@@ -727,7 +727,12 @@
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
-
+<ProgressBar
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    android:layout_below="@id/card3"
+    android:id="@+id/register_progress"/>
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -736,7 +741,7 @@
                 android:textColor="@color/black"
                 android:id="@+id/signup"
                 android:visibility="gone"
-                android:layout_below="@id/card3"
+                android:layout_below="@id/register_progress"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="30dp"
