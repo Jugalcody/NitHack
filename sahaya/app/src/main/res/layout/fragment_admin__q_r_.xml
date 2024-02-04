@@ -2,14 +2,38 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_marginTop="48dp"
     android:layout_height="match_parent"
     tools:context=".Admin_QR_Fragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="hello admin QR" />
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="QR Code"
+            android:textColor="@color/black"
+            android:textSize="21sp"
+            android:id="@+id/qrtext_admin"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/gugi"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/qrtext_admin"
+            android:layout_margin="10dp"
+            android:id="@+id/qr_admin"
+            />
+
+
+    </RelativeLayout>
+
 
 </FrameLayout>

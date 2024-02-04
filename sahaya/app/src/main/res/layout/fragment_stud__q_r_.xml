@@ -3,14 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="48dp"
     tools:context=".Stud_QR_Fragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="student qr"
-        android:gravity="center"
-      />
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="QR Code"
+            android:textColor="@color/black"
+            android:textSize="21sp"
+            android:id="@+id/qrtext_student"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/gugi"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/qrtext_student"
+            android:layout_margin="10dp"
+            android:id="@+id/qr_student"
+            />
+
+    </RelativeLayout>
 
 </FrameLayout>

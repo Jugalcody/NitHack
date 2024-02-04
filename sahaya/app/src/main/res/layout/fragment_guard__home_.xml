@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_marginTop="48dp"
     android:layout_height="match_parent"
     tools:context=".Guard_Home_Fragment">
 <LinearLayout
@@ -13,7 +14,7 @@
     >
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="150dp"
-
+      android:id="@+id/qrscan_guard_home"
         android:text="QR Scanner"
         android:layout_margin="10dp"
         android:fontFamily="@font/gugi"
@@ -22,6 +23,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="150dp"
         android:text="Outsider"
+        android:id="@+id/outsider_guard_home"
         android:fontFamily="@font/gugi"
         android:layout_margin="10dp"
         android:layout_gravity="center"

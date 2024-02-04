@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
@@ -30,6 +31,7 @@ import java.util.HashMap;
 public class LoginActivity extends AppCompatActivity {
     TextView signup;
     ProgressBar progressBar;
+    SharedPreferences sp;
     Spinner spinner;
     String user="null";
     EditText phone,pass;
@@ -43,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         signup=findViewById(R.id.regclick);
         spinner=findViewById(R.id.loginSpinner);
         login =findViewById(R.id.login);
+        sp=getSharedPreferences("qr",MODE_PRIVATE);
         progressBar=findViewById(R.id.progress_login);
         progressBar.setVisibility(View.GONE);
         login.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
             temp = "https://securityProject.onrender.com/api/faculity/auth";
         }
         else if(identity.equals("Admin")){
-            temp = "https://securityProject.onrender.com/api/student/auth";
+            temp = "https://securityProject.onrender.com/api/admin/auth";
         }
         else if(identity.equals("Guard")){
             temp = "https://securityProject.onrender.com/api/guard/auth";
@@ -144,7 +147,9 @@ public class LoginActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 try {
                     if(Boolean.parseBoolean(response.getString("success"))){
-
+sp.edit().putString("phone",phone).apply();
+sp.edit().putString("pass",password).apply();
+sp.edit().putString("user",identity).apply();
                         Toast.makeText(getApplicationContext(),response.getString("msg"), Toast.LENGTH_SHORT).show();
                   if(identity.equals("Student")) {
                       Intent b1 = new Intent(LoginActivity.this, HomePage_General.class);

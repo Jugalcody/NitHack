@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -51,6 +52,8 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -212,7 +215,7 @@ public class Register extends AppCompatActivity {
                 signup.setVisibility(View.VISIBLE);
 
                 collegeLayout.setVisibility(View.VISIBLE);
-                rollLayout.setVisibility(View.VISIBLE);
+                rollLayout.setVisibility(View.GONE);
                 addressLayout.setVisibility(View.VISIBLE);
             }
         });
@@ -234,7 +237,7 @@ public class Register extends AppCompatActivity {
                 } else if (collegename_.equals("")) {
                     scroll.fullScroll(ScrollView.FOCUS_UP);
                     Toast.makeText(getApplicationContext(), "college name empty!", Toast.LENGTH_SHORT).show();
-                } else if (roll_.equals("") && (user.equals("Student") || user.equals("Admin"))) {
+                } else if (roll_.equals("") && (user.equals("Student"))) {
                     scroll.fullScroll(ScrollView.FOCUS_UP);
                     Toast.makeText(getApplicationContext(), "roll empty!", Toast.LENGTH_SHORT).show();
                 } else if (pass_.equals("")) {
@@ -276,7 +279,7 @@ public class Register extends AppCompatActivity {
                         registerFaculity(firstname_ + " " + lastname_, pass_, phone_, gender, collegename_, occupation_, photo, photoid);
                     } else if (user.equals("Admin")) {
                         progressBar.setVisibility(View.VISIBLE);
-                        registerAdmin(firstname_ + " " + lastname_, pass_, phone_, gender, collegename_, roll_, address_, photo, photoid);
+                        registerAdmin(firstname_ + " " + lastname_, pass_, phone_, gender, collegename_, address_, photo, photoid);
                     } else if (user.equals("Guard")) {
                         progressBar.setVisibility(View.VISIBLE);
                         registerGuard(firstname_ + " " + lastname_, pass_, phone_, gender, collegename_,photo);
@@ -353,7 +356,8 @@ public class Register extends AppCompatActivity {
                                 imageView.setImageBitmap(imageBitmap);
                                 Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_SHORT).show();
                                 imageView.setImageBitmap(drawFaceRectangles(imageBitmap, faces));
-                                photo = getImageUri(getApplicationContext(), imageBitmap);
+                                //photo = getImageUri(getApplicationContext(), imageBitmap);
+                                photo= String.valueOf(getUri(imageBitmap,getApplicationContext()));
                                 photodone = true;
 
                             } else {
@@ -370,7 +374,8 @@ public class Register extends AppCompatActivity {
                                 imageView2.setImageBitmap(imageBitmap);
                                 Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_SHORT).show();
                                 imageView2.setImageBitmap(drawFaceRectangles(imageBitmap, faces));
-                                photoid = getImageUri(getApplicationContext(), imageBitmap);
+                               // photoid = getImageUri(getApplicationContext(), imageBitmap);
+                                photoid= String.valueOf(getUri(imageBitmap,getApplicationContext()));
                                 idcarddone = true;
                             } else {
                                 Toast.makeText(getApplicationContext(), "invalid idcard", Toast.LENGTH_SHORT).show();
@@ -491,9 +496,9 @@ public class Register extends AppCompatActivity {
         q.add(j);
     }
 
-    public void registerAdmin(String username, String password, String phone, String gender, String college, String roll, String hostel, String photo, String photoid) {
+    public void registerAdmin(String username, String password, String phone, String gender, String college, String hostel_, String photo_, String photoid_) {
 
-        String temp = "https://securityProject.onrender.com/api/student/register";
+        String temp = "https://securityProject.onrender.com/api/admin/register";
 
 
         HashMap<String, String> jsonobj = new HashMap<>();
@@ -502,10 +507,11 @@ public class Register extends AppCompatActivity {
         jsonobj.put("phone", phone);
         jsonobj.put("gender", gender);
         jsonobj.put("college", college);
-        jsonobj.put("roll", roll);
-        jsonobj.put("hostel", hostel);
-        jsonobj.put("photo", photo);
-        jsonobj.put("photoid", photoid);
+        jsonobj.put("hostel", hostel_);
+        jsonobj.put("photo", photo_);
+        jsonobj.put("photoid", photoid_);
+
+
 
         JsonObjectRequest j = new JsonObjectRequest(Request.Method.POST, temp, new JSONObject(jsonobj), new Response.Listener<JSONObject>() {
 
@@ -657,6 +663,24 @@ public class Register extends AppCompatActivity {
         byte[] byteImage_photo = bytes.toByteArray();
 
         return Base64.encodeToString(byteImage_photo,Base64.DEFAULT);
+    }
+
+    public Uri getUri(Bitmap img, Context context){
+        File folder=new File(context.getCacheDir(),"images");
+        Uri uri=null;
+        try{
+            folder.mkdirs();
+            File file=new File(folder,"captued_img.jpg");
+            FileOutputStream stream=new FileOutputStream(file);
+            img.compress(Bitmap.CompressFormat.JPEG,100,stream);
+            stream.flush();
+            stream.close();
+            uri= FileProvider.getUriForFile(context.getApplicationContext(),"com.example.sahaya"+".provider",file);
+
+        } catch(IOException e){
+
+        }
+        return uri;
     }
 
 }
