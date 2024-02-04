@@ -357,7 +357,7 @@ public class Register extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_SHORT).show();
                                 imageView.setImageBitmap(drawFaceRectangles(imageBitmap, faces));
                                 //photo = getImageUri(getApplicationContext(), imageBitmap);
-                                photo= String.valueOf(getUri(imageBitmap,getApplicationContext()));
+                                photoid= String.valueOf(getImageUri(getApplicationContext(),imageBitmap));
                                 photodone = true;
 
                             } else {
@@ -375,7 +375,7 @@ public class Register extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_SHORT).show();
                                 imageView2.setImageBitmap(drawFaceRectangles(imageBitmap, faces));
                                // photoid = getImageUri(getApplicationContext(), imageBitmap);
-                                photoid= String.valueOf(getUri(imageBitmap,getApplicationContext()));
+                                photoid= String.valueOf(getImageUri(getApplicationContext(),imageBitmap));
                                 idcarddone = true;
                             } else {
                                 Toast.makeText(getApplicationContext(), "invalid idcard", Toast.LENGTH_SHORT).show();
