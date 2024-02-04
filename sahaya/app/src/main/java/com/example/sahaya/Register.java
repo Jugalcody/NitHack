@@ -357,7 +357,7 @@ public class Register extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_SHORT).show();
                                 imageView.setImageBitmap(drawFaceRectangles(imageBitmap, faces));
                                 //photo = getImageUri(getApplicationContext(), imageBitmap);
-                                photoid= String.valueOf(getImageUri(getApplicationContext(),imageBitmap));
+                                photo= String.valueOf(getImageUri(getApplicationContext(),imageBitmap));
                                 photodone = true;
 
                             } else {
