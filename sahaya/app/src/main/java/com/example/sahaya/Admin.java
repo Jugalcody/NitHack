@@ -11,16 +11,26 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.SurfaceControl;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
 public class Admin extends AppCompatActivity {
     DrawerLayout drawerLayout;
+    SharedPreferences sp1;
     Toolbar toolbar;
+    TextView headerText,headerText2;
+    ImageView headerimg;
     NavigationView nav;
     FragmentManager fragmentManager;
     @Override
@@ -28,12 +38,25 @@ public class Admin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
         drawerLayout = findViewById(R.id.drawerLayout_admin);
+        sp1=getSharedPreferences("users",MODE_PRIVATE);
         toolbar = findViewById(R.id.toolbar_admin);
+
         nav = findViewById(R.id.navigationview_drawer_admin);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+        NavigationView navigationView=findViewById(R.id.navigationview_drawer_admin);
+        View headerView = navigationView.getHeaderView(0);
+        headerText = headerView.findViewById(R.id.text1_admin);
+        headerText2 = headerView.findViewById(R.id.text2_admin);
+        headerimg = headerView.findViewById(R.id.image_admin);
+        headerText.setText(sp1.getString("name44","user"));
+        headerText2.setText(sp1.getString("identity","user"));
+
+        Bitmap b = getbitmap(sp1.getString("bitmap",""));
+        headerimg.setImageBitmap(b);
         openFragment(new Admin_home_Fragment());
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -77,5 +100,9 @@ public class Admin extends AppCompatActivity {
         transaction.replace(R.id.container_admin,fragment);
         transaction.commit();
     }
-
+    public Bitmap getbitmap(String s){
+        byte[] bytes= Base64.decode(s,Base64.DEFAULT);
+        Bitmap bitmap2= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+        return bitmap2;
+    }
 }

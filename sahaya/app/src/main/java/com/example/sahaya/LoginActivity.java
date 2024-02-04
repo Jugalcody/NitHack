@@ -30,10 +30,12 @@ import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
     TextView signup;
+    SharedPreferences sp1;
     ProgressBar progressBar;
     SharedPreferences sp;
     Spinner spinner;
     String user="null";
+    String bitmap="";
     EditText phone,pass;
     AppCompatButton login;
     @Override
@@ -48,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         sp=getSharedPreferences("qr",MODE_PRIVATE);
         progressBar=findViewById(R.id.progress_login);
         progressBar.setVisibility(View.GONE);
+        sp1=getSharedPreferences("users",MODE_PRIVATE);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -147,16 +150,26 @@ public class LoginActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 try {
                     if(Boolean.parseBoolean(response.getString("success"))){
-sp.edit().putString("phone",phone).apply();
-sp.edit().putString("pass",password).apply();
-sp.edit().putString("user",identity).apply();
+sp1.edit().putString("phone",phone).apply();
+sp1.edit().putString("pass",password).apply();
+sp1.edit().putString("identity",identity).apply();
+                        sp1.edit().putString("bitmap",response.getString("photo")).apply();
+                        sp1.edit().putString("name44",response.getString("username")).apply();
+                        sp1.edit().putString("college",response.getString("college")).apply();
+                        sp1.edit().putString("gender",response.getString("gender")).apply();
                         Toast.makeText(getApplicationContext(),response.getString("msg"), Toast.LENGTH_SHORT).show();
                   if(identity.equals("Student")) {
                       Intent b1 = new Intent(LoginActivity.this, HomePage_General.class);
+                      sp1.edit().putString("roll",response.getString("roll")).apply();
+                      sp1.edit().putString("address",response.getString("hostel")).apply();
+                      sp1.edit().putString("idcard",response.getString("photoid")).apply();
                       startActivity(b1);
                   }
                   else if(identity.equals("Admin")) {
                       Intent b1 = new Intent(LoginActivity.this, Admin.class);
+
+                      sp1.edit().putString("address",response.getString("hostel")).apply();
+                      sp1.edit().putString("idcard",response.getString("photoid")).apply();
                       startActivity(b1);
                   }
                   else if(identity.equals("Guard")) {
@@ -165,7 +178,11 @@ sp.edit().putString("user",identity).apply();
                   }
                   else if(identity.equals("Faculity Member")) {
                       Intent b1 = new Intent(LoginActivity.this, HomePage_General.class);
+                      sp1.edit().putString("idcard",response.getString("photoid")).apply();
+                      sp1.edit().putString("work",response.getString("specification")).apply();
                       startActivity(b1);
+
+
                   }
                     }
                     else{

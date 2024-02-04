@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    tools:context=".General_group">
+    <TextView
+        android:layout_width="match_parent"
+        android:text="Admin-only messaging for content    excellence—restricted from everyone else"
+        android:padding="40dp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:layout_height="670dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/inputchat"
+        android:layout_margin="15dp"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="0dp"
+            android:inputType="text"
+            android:layout_weight="8"
+            android:padding="4dp"
+            android:background="@drawable/editdesign"
+            android:fitsSystemWindows="true"
+            android:layout_height="58dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:hint="type message" />
+        <Button
+            android:fitsSystemWindows="true"
+            android:layout_weight="2"
+            android:padding="9dp"
+            android:layout_margin="1dp"
+            android:background="@drawable/button_login"
+            android:layout_width="0dp"
+            android:layout_height="58dp"
+            android:text="send"/>
+
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -11,22 +11,32 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
 public class HomePage_General extends AppCompatActivity  {
 DrawerLayout drawerLayout;
+    TextView headerText,headerText2;
+    ImageView headerimg;
 Toolbar toolbar;
     NavigationView nav;
+    SharedPreferences sp1;
     FragmentManager fragmentManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage_general);
-
+sp1=getSharedPreferences("users",MODE_PRIVATE);
         drawerLayout = findViewById(R.id.drawerLayout_general);
         toolbar = findViewById(R.id.toolbar_general);
         nav = findViewById(R.id.navigationview_drawer);
@@ -34,6 +44,17 @@ Toolbar toolbar;
                 R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+        NavigationView navigationView=findViewById(R.id.navigationview_drawer);
+        View headerView = navigationView.getHeaderView(0);
+        headerText = headerView.findViewById(R.id.text1_general);
+        headerText2 = headerView.findViewById(R.id.text2_general);
+        headerimg = headerView.findViewById(R.id.img_general_header);
+        headerText.setText(sp1.getString("name44","user"));
+        headerText2.setText(sp1.getString("identity","user"));
+
+        Bitmap b = getbitmap(sp1.getString("bitmap",""));
+        headerimg.setImageBitmap(b);
         openFragment(new Stud_home_Fragment());
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -78,5 +99,9 @@ Toolbar toolbar;
         transaction.replace(R.id.container,fragment);
         transaction.commit();
     }
-
+    public Bitmap getbitmap(String s){
+        byte[] bytes= Base64.decode(s,Base64.DEFAULT);
+        Bitmap bitmap2= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+        return bitmap2;
+    }
 }
