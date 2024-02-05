@@ -9,14 +9,17 @@ import android.os.Handler;
 
 public class SplashScreen extends AppCompatActivity {
 
-    SharedPreferences sp;
+    SharedPreferences sp,sp1;
+    String user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        sp=getSharedPreferences("boot",MODE_PRIVATE);
-        boolean islogged=sp.getBoolean("islogged",false);
+        sp=getSharedPreferences("users",MODE_PRIVATE);
+        sp1=getSharedPreferences("login",MODE_PRIVATE);
+        user=sp1.getString("identity","");
 
+        boolean islogged=sp1.getBoolean("islogged",false);
         if(!islogged) {
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -35,8 +38,18 @@ public class SplashScreen extends AppCompatActivity {
                 @Override
                 public void run() {
 
-                    Intent i = new Intent(SplashScreen.this,LoginActivity.class);
-                    startActivity(i);
+              if(user.equals("Student") || user.equals("Faculit Member")) {
+                  Intent i = new Intent(SplashScreen.this, HomePage_General.class);
+               startActivity(i);
+              }
+              else if(user.equals("Guard")) {
+                  Intent i = new Intent(SplashScreen.this, Security.class);
+                  startActivity(i);
+              }
+              else if(user.equals("Admin")){
+                  Intent i = new Intent(SplashScreen.this, Admin.class);
+                  startActivity(i);
+              }
                     finish();
                 }
 

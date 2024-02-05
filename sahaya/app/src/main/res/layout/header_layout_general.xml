@@ -19,7 +19,7 @@
         android:src="@drawable/user" />
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:text="Rikesh Yadav"
         android:id="@+id/text1_general"
         android:layout_marginTop="20dp"
@@ -29,7 +29,7 @@
         android:textColor="@color/black"/>
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/text1_general"
         android:text="student"
         android:id="@+id/text2_general"

@@ -26,11 +26,12 @@ import com.google.android.material.navigation.NavigationView;
 
 public class Security extends AppCompatActivity {
     DrawerLayout drawerLayout;
-    SharedPreferences sp1;
+    SharedPreferences sp,sp1;
     Toolbar toolbar;
     TextView headerText,headerText2;
     ImageView headerimg;
     NavigationView nav;
+    boolean back=false;
     FragmentManager fragmentManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,9 @@ public class Security extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout_security);
         toolbar = findViewById(R.id.toolbar_security);
         nav = findViewById(R.id.navigationview_drawer_security);
+        sp=getSharedPreferences("users",MODE_PRIVATE);
         sp1=getSharedPreferences("users",MODE_PRIVATE);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
@@ -50,10 +53,10 @@ public class Security extends AppCompatActivity {
         headerText = headerView.findViewById(R.id.text1_guard);
         headerText2 = headerView.findViewById(R.id.text2_guard);
         headerimg = headerView.findViewById(R.id.img_guard);
-        headerText.setText(sp1.getString("name44","user"));
-        headerText2.setText(sp1.getString("identity","user"));
+        headerText.setText(sp.getString("name44","user"));
+        headerText2.setText(sp.getString("identity","user"));
 
-        Bitmap b = getbitmap(sp1.getString("bitmap",""));
+        Bitmap b = getbitmap(sp.getString("bitmap",""));
         headerimg.setImageBitmap(b);
 
         openFragment(new Guard_Home_Fragment());
@@ -75,27 +78,44 @@ public class Security extends AppCompatActivity {
                 }
                 else if (itemId==R.id.nav_logout) {
                     Intent i=new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(i);
+                    sp1.edit().putBoolean("islogged",false).apply();
                     Toast.makeText(getApplicationContext(), "logging out", Toast.LENGTH_SHORT).show();
+                    startActivity(i);
+
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }
         });
     }
+
     @Override
     public void onBackPressed() {
 
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
+        }
+        else{
+            if(this.getSupportFragmentManager().getBackStackEntryCount()==1 && !back){
+             back=true;
+             Toast.makeText(getApplicationContext(),"Press back again to exit",Toast.LENGTH_SHORT).show();
 
-            super.onBackPressed();
+            }
+            else if(this.getSupportFragmentManager().getBackStackEntryCount()==1 && back){
 
+                finishAffinity();
+            }
+
+            else {
+                super.onBackPressed();
+            }
         }
     }
+    boolean exit(boolean back){
+        return true;
+    }
     private void openFragment(Fragment fragment){
-        FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction=getSupportFragmentManager().beginTransaction().addToBackStack("tag");;
         transaction.replace(R.id.container_security,fragment);
         transaction.commit();
     }
@@ -105,4 +125,6 @@ public class Security extends AppCompatActivity {
         Bitmap bitmap2= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
         return bitmap2;
     }
+
+
 }

@@ -32,6 +32,7 @@ import java.util.HashMap;
 public class Stud_Profile_Fragment extends Fragment {
 AppCompatButton editStudent;
 TextView name,identity,phone,college,address;
+ImageView idcard;
     String identity_="",ph="",pass="";
     ImageView imgP;
     SharedPreferences sp1;
@@ -45,6 +46,7 @@ TextView name,identity,phone,college,address;
         identity=view.findViewById(R.id.identity_profile_general);
         imgP=view.findViewById(R.id.image_profile_general);
         phone=view.findViewById(R.id.phone_profile_general);
+        idcard=view.findViewById(R.id.idcard_profile_student);
         college=view.findViewById(R.id.college_profile_general);
         address=view.findViewById(R.id.address_profile_general);
         sp1=getActivity().getSharedPreferences("users", Context.MODE_PRIVATE);
@@ -53,7 +55,9 @@ TextView name,identity,phone,college,address;
 
         name.setText(sp1.getString("name44",""));
         Bitmap b = getbitmap(sp1.getString("bitmap",""));
+        Bitmap c=getbitmap(sp1.getString("idcard",""));
         imgP.setImageBitmap(b);
+        idcard.setImageBitmap(c);
                 pass=sp1.getString("pass","");
                 identity.setText(identity_);
                 phone.setText(ph);

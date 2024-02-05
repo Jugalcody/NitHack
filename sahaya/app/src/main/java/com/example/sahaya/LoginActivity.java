@@ -30,9 +30,8 @@ import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
     TextView signup;
-    SharedPreferences sp1;
     ProgressBar progressBar;
-    SharedPreferences sp;
+    SharedPreferences sp,sp1,sp2;
     Spinner spinner;
     String user="null";
     String bitmap="";
@@ -48,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         spinner=findViewById(R.id.loginSpinner);
         login =findViewById(R.id.login);
         sp=getSharedPreferences("qr",MODE_PRIVATE);
+        sp2=getSharedPreferences("login",MODE_PRIVATE);
         progressBar=findViewById(R.id.progress_login);
         progressBar.setVisibility(View.GONE);
         sp1=getSharedPreferences("users",MODE_PRIVATE);
@@ -150,9 +150,15 @@ public class LoginActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 try {
                     if(Boolean.parseBoolean(response.getString("success"))){
-sp1.edit().putString("phone",phone).apply();
-sp1.edit().putString("pass",password).apply();
-sp1.edit().putString("identity",identity).apply();
+                        sp1.edit().putString("islogged","true").apply();
+sp.edit().putString("phone",phone).apply();
+                        sp2.edit().putBoolean("islogged",true).apply();
+                        sp2.edit().putString("identity",identity).apply();
+sp.edit().putString("pass",password).apply();
+sp.edit().putString("user",identity).apply();
+                        sp1.edit().putString("phone",phone).apply();
+                        sp1.edit().putString("pass",password).apply();
+                        sp1.edit().putString("identity",identity).apply();
                         sp1.edit().putString("bitmap",response.getString("photo")).apply();
                         sp1.edit().putString("name44",response.getString("username")).apply();
                         sp1.edit().putString("college",response.getString("college")).apply();
@@ -207,5 +213,11 @@ sp1.edit().putString("identity",identity).apply();
 
         q.add(j);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
+        super.onBackPressed();
     }
 }

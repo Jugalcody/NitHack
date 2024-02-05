@@ -22,4 +22,6 @@ public class Stud_Setting_Fragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_stud__setting_, container, false);
     }
+
+
 }

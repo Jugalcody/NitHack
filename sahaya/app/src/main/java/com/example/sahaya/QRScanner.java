@@ -87,7 +87,7 @@ ImageView img,img2;
 
                 try {
 
-                    auth(arr[0], arr[1], arr[2]);
+                    auth(decode(arr[0]), decode(arr[1]),decode(arr[2]));
                 }catch (Exception e){
 
                     Toast.makeText(getApplicationContext(),"wrong qrcode",Toast.LENGTH_SHORT).show();
@@ -208,6 +208,17 @@ ImageView img,img2;
         byte[] bytes=Base64.decode(s,Base64.DEFAULT);
         Bitmap bitmap2=BitmapFactory.decodeByteArray(bytes,0,bytes.length);
         return bitmap2;
+    }
+    public String decode(String str){
+        String res="";
+        str=str.trim();
+        for(int i=0;i<str.length();i++){
+            int k=str.charAt(i);
+            k=k-3;
+            char c=(char)k;
+            res+=c;
+        }
+        return res;
     }
 
 }

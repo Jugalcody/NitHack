@@ -28,15 +28,19 @@ public class HomePage_General extends AppCompatActivity  {
 DrawerLayout drawerLayout;
     TextView headerText,headerText2;
     ImageView headerimg;
+    boolean back=false;
 Toolbar toolbar;
     NavigationView nav;
-    SharedPreferences sp1;
+    SharedPreferences sp,sp1;
     FragmentManager fragmentManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage_general);
-sp1=getSharedPreferences("users",MODE_PRIVATE);
+        openFragment(new Stud_home_Fragment());
+        sp=getSharedPreferences("users",MODE_PRIVATE);
+        sp1=getSharedPreferences("login",MODE_PRIVATE);
+
         drawerLayout = findViewById(R.id.drawerLayout_general);
         toolbar = findViewById(R.id.toolbar_general);
         nav = findViewById(R.id.navigationview_drawer);
@@ -50,12 +54,17 @@ sp1=getSharedPreferences("users",MODE_PRIVATE);
         headerText = headerView.findViewById(R.id.text1_general);
         headerText2 = headerView.findViewById(R.id.text2_general);
         headerimg = headerView.findViewById(R.id.img_general_header);
-        headerText.setText(sp1.getString("name44","user"));
-        headerText2.setText(sp1.getString("identity","user"));
+        headerText.setText(sp.getString("name44","user"));
 
-        Bitmap b = getbitmap(sp1.getString("bitmap",""));
-        headerimg.setImageBitmap(b);
-        openFragment(new Stud_home_Fragment());
+            headerText2.setText(sp.getString("identity", "user"));
+        try {
+            Bitmap b = getbitmap(sp.getString("bitmap", ""));
+            headerimg.setImageBitmap(b);
+
+        }
+        catch(Exception e){
+           headerimg.setImageResource(R.drawable.user);
+        }
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -75,27 +84,43 @@ sp1=getSharedPreferences("users",MODE_PRIVATE);
                     }
                 else if (itemId==R.id.nav_logout) {
                     Intent i=new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(i);
+                    sp1.edit().putBoolean("islogged",false).apply();
+
                     Toast.makeText(getApplicationContext(), "logging out", Toast.LENGTH_SHORT).show();
+                    startActivity(i);
+
+
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }
         });
     }
+
     @Override
     public void onBackPressed() {
 
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
+        }
+        else{
+            if(this.getSupportFragmentManager().getBackStackEntryCount()==1 && !back){
+                back=true;
+                Toast.makeText(getApplicationContext(),"Press back again to exit",Toast.LENGTH_SHORT).show();
 
+            }
+            else if(this.getSupportFragmentManager().getBackStackEntryCount()==1 && back){
+
+                finishAffinity();
+            }
+
+            else {
                 super.onBackPressed();
-
+            }
         }
     }
     private void openFragment(Fragment fragment){
-        FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction=getSupportFragmentManager().beginTransaction().addToBackStack("tag");;
         transaction.replace(R.id.container,fragment);
         transaction.commit();
     }
@@ -104,4 +129,7 @@ sp1=getSharedPreferences("users",MODE_PRIVATE);
         Bitmap bitmap2= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
         return bitmap2;
     }
+
+
+
 }

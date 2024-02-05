@@ -23,6 +23,7 @@ public class Admin_profile_Fragment extends Fragment {
     AppCompatButton editStudent;
     TextView name,identity,phone,college,address;
     String identity_="",ph="",pass="";
+    ImageView idcard;
     ImageView imgP;
     SharedPreferences sp1;
     @Override
@@ -32,6 +33,7 @@ public class Admin_profile_Fragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_admin_profile_, container, false);
         editStudent=view.findViewById(R.id.bt_student);
         name=view.findViewById(R.id.name1_admin_profile);
+        idcard=view.findViewById(R.id.idcard_profile_admin);
         identity=view.findViewById(R.id.identity_profile_admin);
         imgP=view.findViewById(R.id.image_profile_admin);
         phone=view.findViewById(R.id.phone_profile_admin);
@@ -46,6 +48,9 @@ public class Admin_profile_Fragment extends Fragment {
 
         Bitmap b = getbitmap(sp1.getString("bitmap",""));
         imgP.setImageBitmap(b);
+
+        Bitmap c=getbitmap(sp1.getString("idcard",""));
+        idcard.setImageBitmap(c);
         pass=sp1.getString("pass","");
         identity.setText(identity_);
         phone.setText(ph);

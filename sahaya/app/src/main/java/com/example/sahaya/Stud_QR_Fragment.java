@@ -17,6 +17,8 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+import java.nio.charset.CharsetEncoder;
+
 public class Stud_QR_Fragment extends Fragment {
 ImageView qr;
 SharedPreferences sp;
@@ -25,7 +27,7 @@ SharedPreferences sp;
                              Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_stud__q_r_, container, false);
         sp=getActivity().getSharedPreferences("qr", Context.MODE_PRIVATE);
-        String code=sp.getString("phone","")+"//"+sp.getString("pass","")+"//"+sp.getString("user","");
+        String code=encode(sp.getString("phone",""))+"//"+encode(sp.getString("pass",""))+"//"+encode(sp.getString("user",""));
         qr=view.findViewById(R.id.qr_student);
         try {
             qr.setImageBitmap(getQr(code));
@@ -55,4 +57,17 @@ SharedPreferences sp;
         }
 
     }
+
+    public String encode(String str){
+        String res="";
+        str=str.trim();
+        for(int i=0;i<str.length();i++){
+            int k=str.charAt(i);
+            k=k+3;
+            char c=(char)k;
+            res+=c;
+        }
+        return res;
+    }
+
 }

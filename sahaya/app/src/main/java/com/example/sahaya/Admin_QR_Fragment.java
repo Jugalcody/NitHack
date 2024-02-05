@@ -28,7 +28,7 @@ public class Admin_QR_Fragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_admin__q_r_, container, false);
         qr=view.findViewById(R.id.qr_admin);
         sp=getActivity().getSharedPreferences("qr", Context.MODE_PRIVATE);
-        String code=sp.getString("phone","")+"//"+sp.getString("pass","")+"//"+sp.getString("user","");
+        String code=encode(sp.getString("phone",""))+"//"+encode(sp.getString("pass",""))+"//"+encode(sp.getString("user",""));
         try {
             qr.setImageBitmap(getQr(code));
         } catch (WriterException e) {
@@ -57,4 +57,16 @@ public class Admin_QR_Fragment extends Fragment {
         }
 
     }
+    public String encode(String str){
+        String res="";
+        str=str.trim();
+        for(int i=0;i<str.length();i++){
+            int k=str.charAt(i);
+            k=k+3;
+            char c=(char)k;
+            res+=c;
+        }
+        return res;
+    }
+
 }
